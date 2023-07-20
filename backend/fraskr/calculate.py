@@ -23,6 +23,7 @@ def calc():
         elif operant == "/":
             result = num1 / num2
         return jsonify({"result": result})
-    # FIXME ZeroDivisionErrorをキャッチして気の利いたエラーを出す
+    except ZeroDivisionError:
+        return jsonify({"result": "ZeroDivisionError"})
     except:
         abort(400)
