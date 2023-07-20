@@ -2,23 +2,27 @@ from flask import (
     Blueprint, request, jsonify, abort
 )
 
-bp = Blueprint('calculate', __name__, url_prefix='/calc')
-@bp.route('calc', methods=['POST'])
-def calc():
-    num1 = request.form["num1"]
-    num2 = request.form["num2"]
-    operant = request.form["ope"]
-    result = None
+calculate_blueprint = Blueprint('calc', __name__, url_prefix='/calc')
 
+@calculate_blueprint.route("/", methods=["POST"])
+def calc():
+    json = request.get_json()
+    num1 = json["num1"]
+    num2 = json["num2"]
+    operant = json["ope"]
+    result = None
+    print(num1, num2, operant)
+    
     try:
-        if operant == '+':
+        if operant == "+":
             result = num1 + num2
-        elif operant == '-':
+        elif operant == "-":
             result = num1 - num2
-        elif operant == '*':
+        elif operant == "*":
             result = num1 * num2
-        elif operant == '/':
+        elif operant == "/":
             result = num1 / num2
         return jsonify({"result": result})
+    # FIXME ZeroDivisionErrorをキャッチして気の利いたエラーを出す
     except:
         abort(400)

@@ -29,38 +29,12 @@ def create_app(test_config=None):
     # 「Hello, kamesan!」とかえすだけ
     @app.route("/hello")
     def hello():
-        return "Hello, kamesan!"
-
-    # 計算処理
-    @app.route("/calc", methods=["POST"])
-    def calc():
-        json = request.get_json()
-        num1 = json["num1"]
-        num2 = json["num2"]
-        operant = json["ope"]
-        result = None
-        print(num1, num2, operant)
-
-        try:
-            if operant == "+":
-                result = num1 + num2
-            elif operant == "-":
-                result = num1 - num2
-            elif operant == "*":
-                result = num1 * num2
-            elif operant == "/":
-                result = num1 / num2
-            return jsonify({"result": result})
-        # FIXME ZeroDivisionErrorをキャッチして気の利いたエラーを出す
-        except:
-            abort(400)
+        return "Hello, kamesans!"
 
     from . import db
-
     db.init_app(app)
 
-    from . import calculate
-
-    app.register_blueprint(calculate.bp)
+    from .calculate import calculate_blueprint
+    app.register_blueprint(calculate_blueprint)
 
     return app
