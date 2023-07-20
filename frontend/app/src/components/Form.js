@@ -1,5 +1,5 @@
-import { Button, Table, Container, Row, Col, ThemeProvider } from "react-bootstrap";
-import { useState, props } from "react";
+import { Button, Table, Container, Row, Col, InputGroup } from "react-bootstrap";
+import { useState } from "react";
 import axios from "axios";
 
 
@@ -36,8 +36,7 @@ function Form() {
             <Table hover striped bordered>
                 <thead>
                     <tr>
-                        <th>左辺</th>
-                        <th>右辺</th>
+                        <th>式</th>
                         <th>演算子</th>
                         <th>結果</th>
                     </tr>
@@ -45,10 +44,13 @@ function Form() {
                 <tbody>
                     <tr>
                         <td>
-                            <input type="number" value={lhs} onChange={(event) => setLhs(event.target.value)} placeholder="0"></input>
-                        </td>
-                        <td>
-                            <input type="number" value={rhs} onChange={(event) => setRhs(event.target.value)} placeholder="0"></input>
+                            <InputGroup>
+                                <input type="number" class="form-control" style={{ textAlign: "center" }} value={lhs} onChange={(event) => setLhs(event.target.value)} placeholder="0"></input>
+                                <span class="input-group-text">{operand}</span>
+                                <input type="number" class="form-control" style={{ textAlign: "center" }} value={rhs} onChange={(event) => setRhs(event.target.value)} placeholder="0"></input>
+                                <span class="input-group-text">=</span>
+                                <span class="form-control">{value}</span>
+                            </InputGroup>
                         </td>
                         <td>
                             <Container>
@@ -69,15 +71,12 @@ function Form() {
                             </Container>
                         </td>
                         <td>
-                            <p>{value}</p>
-                        </td>
-                        <td>
                             <Button variant="outline-secondary" num1={lhs} num2={rhs} ope={operand} onClick={Culc}>計算</Button>
                         </td>
                     </tr>
                 </tbody>
             </Table >
-        </Container>
+        </Container >
     );
 }
 
