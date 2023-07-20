@@ -1,10 +1,6 @@
-import functools
-
 from flask import (
     Blueprint, request, jsonify, abort
 )
-
-from fraskr.db import get_db
 
 bp = Blueprint('calculate', __name__, url_prefix='/calc')
 @bp.route('calc', methods=['POST'])
