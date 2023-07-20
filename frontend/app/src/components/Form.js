@@ -16,13 +16,14 @@ function Form() {
         axios
             .post("http://localhost:5000/calc",
                 {
-                    "num1": lhs,
-                    "num2": rhs,
+                    "num1": parseFloat(lhs),
+                    "num2": parseFloat(rhs),
                     "ope": operand,
                 }, { timeout: 1000 })
             .then((res) => {
-                console.log(res.data);
-                setValue(res.data);
+                console.log(`${lhs} ${operand} ${rhs} = ??`);
+                console.log(res);
+                setValue(res.data.result);
             })
             .catch((err) => {
                 console.log(`${lhs} ${operand} ${rhs} = ??`);

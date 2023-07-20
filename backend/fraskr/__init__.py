@@ -34,10 +34,12 @@ def create_app(test_config=None):
     # 計算処理
     @app.route("/calc", methods=["POST"])
     def calc():
-        num1 = request.form.get("num1")
-        num2 = request.form.get("num2")
-        operant = request.form.get("ope")
+        json = request.get_json()
+        num1 = json["num1"]
+        num2 = json["num2"]
+        operant = json["ope"]
         result = None
+        print(num1, num2, operant)
 
         try:
             if operant == "+":
@@ -49,6 +51,7 @@ def create_app(test_config=None):
             elif operant == "/":
                 result = num1 / num2
             return jsonify({"result": result})
+        # FIXME ZeroDivisionErrorをキャッチして気の利いたエラーを出す
         except:
             abort(400)
 
