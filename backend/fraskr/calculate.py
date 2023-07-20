@@ -2,9 +2,9 @@ from flask import (
     Blueprint, request, jsonify, abort
 )
 
-calculate_blueprint = Blueprint('calc', __name__, url_prefix='/calc')
+calculate_blueprint = Blueprint('calc', __name__)
 
-@calculate_blueprint.route("/", methods=["POST"])
+@calculate_blueprint.route("/calc", methods=["POST"])
 def calc():
     json = request.get_json()
     num1 = json["num1"]
