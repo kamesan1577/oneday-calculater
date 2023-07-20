@@ -34,9 +34,9 @@ def create_app(test_config=None):
     # 計算処理
     @app.route("/calc", methods=["POST"])
     def calc():
-        num1 = request.form["num1"]
-        num2 = request.form["num2"]
-        operant = request.form["ope"]
+        num1 = request.form.get("num1")
+        num2 = request.form.get("num2")
+        operant = request.form.get("ope")
         result = None
 
         try:
