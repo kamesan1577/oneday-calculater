@@ -1,6 +1,6 @@
 import os
 
-from flask import Flask
+from flask import Flask, request, jsonify, abort
 
 def create_app(test_config=None):
     # アプリの設定を作成
@@ -27,6 +27,27 @@ def create_app(test_config=None):
     @app.route('/hello')
     def hello():
         return 'Hello, kamesan!'
+
+    # 計算処理
+    @app.route('calc', methods=['POST'])
+    def calc():
+        num1 = request.form["num1"]
+        num2 = request.form["num2"]
+        operant = request.form["ope"]
+        result = None
+
+        try:
+            if operant == '+':
+                result = num1 + num2
+            elif operant == '-':
+                result = num1 - num2
+            elif operant == '*':
+                result = num1 * num2
+            elif operant == '/':
+                result = num1 / num2
+            return jsonify({"result": result})
+        except:
+            abort(400)
 
     from . import db
     db.init_app(app)
