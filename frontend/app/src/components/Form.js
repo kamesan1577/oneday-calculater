@@ -14,14 +14,15 @@ function Form() {
     function Culc() {
         console.log();
         axios
-            .post("http://localhost:8080/culc",
+            .post("http://localhost:5000/calc",
                 {
                     "num1": lhs,
                     "num2": rhs,
                     "ope": operand,
                 }, { timeout: 1000 })
             .then((res) => {
-                setValue(res.result);
+                console.log(res.data);
+                setValue(res.data);
             })
             .catch((err) => {
                 console.log(`${lhs} ${operand} ${rhs} = ??`);
