@@ -32,13 +32,11 @@ function Form() {
     }
 
     return (
-        <Container>
+        <Container class="align-items-center d-flex">
             <Table hover striped bordered>
                 <thead>
                     <tr>
-                        <th>式</th>
-                        <th>演算子</th>
-                        <th>結果</th>
+                        <th>計算式を入力</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -52,28 +50,31 @@ function Form() {
                                 <span class="form-control">{value}</span>
                             </InputGroup>
                         </td>
+                    </tr>
+                    <tr>
                         <td>
                             <Container>
-                                <Row xs="4">
+                                <Row xs="5">
                                     <Col>
-                                        <Button variant="outline-secondary" onClick={() => setOpe("+")}>+</Button>
+                                        <Button variant={operand != "+" ? "outline-secondary" : "outline-primary"} onClick={() => setOpe("+")}>+</Button>
                                     </Col>
                                     <Col>
-                                        <Button variant="outline-secondary" onClick={() => setOpe("-")}>-</Button>
+                                        <Button variant={operand != "-" ? "outline-secondary" : "outline-primary"} disabled={operand != "-" ? false : true} onClick={() => setOpe("-")}>-</Button>
                                     </Col>
                                     <Col>
-                                        <Button variant="outline-secondary" onClick={() => setOpe("*")}>*</Button>
+                                        <Button variant={operand != "*" ? "outline-secondary" : "outline-primary"} disabled={operand != "*" ? false : true} onClick={() => setOpe("*")}>*</Button>
                                     </Col>
                                     <Col>
-                                        <Button variant="outline-secondary" onClick={() => setOpe("/")}>/</Button>
+                                        <Button variant={operand != "/" ? "outline-secondary" : "outline-primary"} disabled={operand != "/" ? false : true} onClick={() => setOpe("/")}>/</Button>
+                                    </Col>
+                                    <Col>
+                                        <Button variant="primary" num1={lhs} num2={rhs} ope={operand} onClick={Culc}>計算</Button>
                                     </Col>
                                 </Row>
                             </Container>
                         </td>
-                        <td>
-                            <Button variant="outline-secondary" num1={lhs} num2={rhs} ope={operand} onClick={Culc}>計算</Button>
-                        </td>
                     </tr>
+
                 </tbody>
             </Table >
         </Container >
