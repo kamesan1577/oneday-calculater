@@ -1,3 +1,4 @@
+import datetime
 from flask import (
     Blueprint, request, jsonify, abort
 )
@@ -5,14 +6,16 @@ from flask import (
 from .db import get_db
 
 calculate_blueprint = Blueprint('calc', __name__)
+dt_now =datetime.datetime.now()
 
 @calculate_blueprint.route("/calc", methods=["POST"])
 def calc():
     json = request.get_json()
-    cookie_id = json["cookie_id"]
+    cookie_id = json.get("cookie_id")
     num1 = json["num1"]
     num2 = json["num2"]
     operant = json["ope"]
+    timestamp = dt_now
     result = None
     print(num1, num2, operant)
     
@@ -28,9 +31,9 @@ def calc():
 
         db = get_db()
         db.execute(
-            'INSERT INTO history(cookie_id, num1, num2, operant, result)'
+            'INSERT INTO history(cookie_id, num1, num2, operant, result, time_stamp)'
             ' VALUES (?, ?, ?, ?, ?, ?)',
-            (cookie_id, num1, num2, operant, result)
+            (cookie_id, num1, num2, operant, result, dt_now)
         )
 
         return jsonify({"result": result})
