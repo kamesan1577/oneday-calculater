@@ -1,6 +1,7 @@
 import { Button, Table, Container, Row, Col, InputGroup } from "react-bootstrap";
 import { useState } from "react";
 import { useCookies } from "react-cookie";
+import { v4 as uuidv4 } from "uuid";
 import axios from "axios";
 
 
@@ -10,12 +11,18 @@ function Form() {
     const [lhs, setLhs] = useState(0);
     const [rhs, setRhs] = useState(0);
     const [operand, setOpe] = useState("+");
+    let uniqueId;
+    const [cookies, setCookie, removeCookie] = useCookies(["cookie_id"])
+    if (!cookies.cookie_id) {
+        uniqueId = uuidv4();
+        setCookie("cookie_id", uniqueId);
+    }
 
     function Culc() {
         axios
             .post("http://localhost:5000/calc",
                 {
-                    "cookie_id": "h0Ge",
+                    "cookie_id": cookies.cookie_id,
                     "num1": parseFloat(lhs),
                     "num2": parseFloat(rhs),
                     "ope": operand,
