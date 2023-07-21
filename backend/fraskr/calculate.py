@@ -35,4 +35,4 @@ def calc():
         db.commit()
         return jsonify({"result": result})
     except Exception as e:
-        return jsonify({"result": "400", "error": e})
+        return jsonify({"result": "400", "error": str(e)})
