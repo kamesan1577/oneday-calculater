@@ -27,7 +27,8 @@ function Form() {
             })
             .catch((err) => {
                 console.log(`${lhs} ${operand} ${rhs} = ??`);
-                console.log("通信エラー");
+                console.log(err.message);
+                alert(err.message);
             })
     }
 
@@ -53,7 +54,7 @@ function Form() {
     return (
         <Container class="align-items-center d-flex">
             <Table hover striped bordered>
-                <thead>
+                <thead style={{ background: "#096148" }}>
                     <tr>
                         <th>計算式を入力</th>
                     </tr>
