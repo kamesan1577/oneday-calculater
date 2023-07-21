@@ -34,7 +34,12 @@ def create_app(test_config=None):
     from . import db
     db.init_app(app)
 
+    # 計算機能
     from .calculate import calculate_blueprint
     app.register_blueprint(calculate_blueprint)
+
+    # 履歴機能
+    from .history import history_blueprint
+    app.register_blueprint(history_blueprint)
 
     return app
