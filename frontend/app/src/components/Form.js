@@ -1,8 +1,9 @@
 import { Button, Table, Container, Row, Col, InputGroup } from "react-bootstrap";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useCookies } from "react-cookie";
 import { v4 as uuidv4 } from "uuid";
 import axios from "axios";
+
 
 
 
@@ -12,6 +13,7 @@ function Form() {
     const [rhs, setRhs] = useState(0);
     const [operand, setOpe] = useState("+");
     const [history, setHistory] = useState([]);
+    const [index, setIndex] = useState(0);
     let uniqueId;
     const [cookies, setCookie, removeCookie] = useCookies(["cookie_id"])
     if (!cookies.cookie_id) {
@@ -32,6 +34,7 @@ function Form() {
                 console.log(`${lhs} ${operand} ${rhs} = ??`);
                 console.log(res);
                 setValue(res.data.result);
+                History();
             })
             .catch((err) => {
                 console.log(`${lhs} ${operand} ${rhs} = ??`);
@@ -53,6 +56,31 @@ function Form() {
                 console.log(err);
             })
     }
+    function PreviousResult() {
+        if (history.length - 1 > index) {
+            setIndex(index + 1);
+            console.log(history.length, index, "Previous");
+            setLhs(history[index + 1].num1);
+            setRhs(history[index + 1].num2);
+            setValue(history[index + 1].result);
+            setOpe(history[index + 1].operant);
+        }
+    }
+
+    function NextResult() {
+        if (index > 0) {
+            setIndex(index - 1);
+            console.log(history.length, index, "Next");
+            setLhs(history[index - 1].num1);
+            setRhs(history[index - 1].num2);
+            setValue(history[index - 1].result);
+            setOpe(history[index - 1].operant);
+        }
+    }
+
+    useEffect(() => {
+        History();
+    }, [])
 
     return (
         <Container class="align-items-center d-flex">
@@ -94,7 +122,10 @@ function Form() {
                                         <Button variant="primary" num1={lhs} num2={rhs} ope={operand} onClick={Culc}>計算</Button>
                                     </Col>
                                     <Col>
-                                        <Button variant="primary" onClick={History}>履歴</Button>
+                                        <Button variant="primary" onClick={PreviousResult}>←</Button>
+                                    </Col>
+                                    <Col>
+                                        <Button variant="primary" onClick={NextResult}>→</Button>
                                     </Col>
                                 </Row>
                             </Container>
