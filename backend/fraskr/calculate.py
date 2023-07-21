@@ -36,5 +36,6 @@ def calc():
         return jsonify({"result": result})
     except ZeroDivisionError:
         return jsonify({"result": "ZeroDivisionError"})
-    except:
-        abort(400)
+    except Exception as e:
+        return jsonify({"result": "400",
+                        "error": e})
