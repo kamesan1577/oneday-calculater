@@ -14,8 +14,8 @@ def history():
     history_list = db.execute(
         'SELECT * FROM history WHERE cookie_id = id ORDER BY rowid DESC LIMIT 10'
         ' VALUES(?)',
-        (id).fetchall()
-    )
+        (id)
+    ).fetchall()
 
     history_json = {}
     temp_list = []
