@@ -34,5 +34,7 @@ def calc():
         )
         db.commit()
         return jsonify({"result": result})
-    except Exception as e:
-        return jsonify({"result": "400", "error": str(e)})
+    except ZeroDivisionError:
+        return jsonify({"result": "ZeroDivisionError"})
+    except:
+        return abort(400)
