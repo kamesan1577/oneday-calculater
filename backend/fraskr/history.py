@@ -12,9 +12,7 @@ def history():
     id = json.get('cookie_id')
     db = get_db()
     history_list = db.execute(
-        'SELECT * FROM history WHERE cookie_id = id ORDER BY rowid DESC LIMIT 10'
-        ' VALUES(?)',
-        (id)
+        "SELECT * FROM history WHERE cookie_id = '{}' ORDER BY rowid DESC LIMIT 10;".format(id)
     ).fetchall()
 
     history_json = {}
