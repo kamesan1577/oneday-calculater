@@ -11,6 +11,7 @@ function Form() {
     const [lhs, setLhs] = useState(0);
     const [rhs, setRhs] = useState(0);
     const [operand, setOpe] = useState("+");
+    const [history, setHistory] = useState([]);
     let uniqueId;
     const [cookies, setCookie, removeCookie] = useCookies(["cookie_id"])
     if (!cookies.cookie_id) {
@@ -34,26 +35,22 @@ function Form() {
             })
             .catch((err) => {
                 console.log(`${lhs} ${operand} ${rhs} = ??`);
-                console.log("通信エラー");
+                console.log(err);
             })
     }
 
-    function Register() {
+    function History() {
         axios
-            .post("http://localhost:5000/calc",
+            .post("http://localhost:5000/history",
                 {
-                    "num1": parseFloat(lhs),
-                    "num2": parseFloat(rhs),
-                    "ope": operand,
+                    "cookie_id": cookies.cookie_id,
                 }, { timeout: 1000 })
             .then((res) => {
-                console.log(`${lhs} ${operand} ${rhs} = ??`);
                 console.log(res);
-                setValue(res.data.result);
+                setHistory(res.data.results);
             })
             .catch((err) => {
-                console.log(`${lhs} ${operand} ${rhs} = ??`);
-                console.log("通信エラー");
+                console.log(err);
             })
     }
 
@@ -95,6 +92,9 @@ function Form() {
                                     </Col>
                                     <Col>
                                         <Button variant="primary" num1={lhs} num2={rhs} ope={operand} onClick={Culc}>計算</Button>
+                                    </Col>
+                                    <Col>
+                                        <Button variant="primary" onClick={History}>履歴</Button>
                                     </Col>
                                 </Row>
                             </Container>
