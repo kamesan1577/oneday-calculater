@@ -14,7 +14,6 @@ def calc():
     num2 = json["num2"]
     operant = json["ope"]
     result = None
-    time_stamp = None
     print(num1, num2, operant)
     
     try:
@@ -31,7 +30,7 @@ def calc():
         db.execute(
             'INSERT INTO history(cookie_id, num1, num2, operant, result)'
             ' VALUES (?, ?, ?, ?, ?, ?)',
-            (cookie_id, num1, num2, operant, result, time_stamp)
+            (cookie_id, num1, num2, operant, result)
         )
 
         return jsonify({"result": result})
