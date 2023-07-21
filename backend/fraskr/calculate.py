@@ -1,8 +1,10 @@
+import datetime
 from flask import Blueprint, request, jsonify, abort
 
 from .db import get_db
 
 calculate_blueprint = Blueprint("calc", __name__)
+dt_now = datetime.datetime.now()
 
 
 @calculate_blueprint.route("/calc", methods=["POST"])
@@ -14,7 +16,7 @@ def calc():
     operant = json["ope"]
     timestamp = dt_now
     result = None
-    print(num1, num2, operant, cookie_id)
+    print(num1, num2, operant)
 
     try:
         if operant == "+":
@@ -28,12 +30,11 @@ def calc():
 
         db = get_db()
         db.execute(
-            "INSERT INTO history(cookie_id, num1, num2, operant, result)"
+            "INSERT INTO history(cookie_id, num1, num2, operant, result, time_stamp)"
             " VALUES (?, ?, ?, ?, ?, ?)",
-            (cookie_id, num1, num2, operant, result),
+            (cookie_id, num1, num2, operant, result, dt_now),
         )
 
         return jsonify({"result": result})
     except Exception as e:
-        print(e)
         return jsonify({"result": "400", "error": e})
