@@ -11,7 +11,17 @@ def create_app(test_config=None):
         SECRET_KEY="dev",
         DATABASE=os.path.join(app.instance_path, "flaskr.sqlite"),
     )
-    cors = CORS(app, resources={r"/*": {"origins": "http://localhost:3000"}})
+    cors = CORS(
+        app,
+        resources={
+            r"/*": {
+                "origins": [
+                    "http://localhost:3000",
+                    "https://onedaycalculator.onrender.com/",
+                ]
+            }
+        },
+    )
 
     if test_config is None:
         # インスタンスコンフィグが存在し、テストでなければインスタンスのコンフィグを読み込み
@@ -29,17 +39,14 @@ def create_app(test_config=None):
     # 「Hello, kamesan!」とかえすだけ
     @app.route("/hello")
     def hello():
-        return "Hello, kamesans!"
+        return "Hello, kamesan!"
 
     from . import db
+
     db.init_app(app)
 
-    # 計算機能
-    from .calculate import calculate_blueprint
-    app.register_blueprint(calculate_blueprint)
+    from . import calculate
 
-    # 履歴機能
-    from .history import history_blueprint
-    app.register_blueprint(history_blueprint)
+    app.register_blueprint(calculate.bp)
 
     return app
