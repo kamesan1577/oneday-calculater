@@ -1,3 +1,4 @@
 flask
 flask-cors
 pysqlite3
+gunicorn
