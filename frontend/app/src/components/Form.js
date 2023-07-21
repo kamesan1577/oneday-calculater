@@ -1,7 +1,7 @@
 import { Button, Table, Container, Row, Col, InputGroup } from "react-bootstrap";
 import { useState } from "react";
+import { useCookies } from "react-cookie";
 import axios from "axios";
-
 
 
 
@@ -12,7 +12,25 @@ function Form() {
     const [operand, setOpe] = useState("+");
 
     function Culc() {
-        console.log();
+        axios
+            .post("http://localhost:5000/calc",
+                {
+                    "num1": parseFloat(lhs),
+                    "num2": parseFloat(rhs),
+                    "ope": operand,
+                }, { timeout: 1000 })
+            .then((res) => {
+                console.log(`${lhs} ${operand} ${rhs} = ??`);
+                console.log(res);
+                setValue(res.data.result);
+            })
+            .catch((err) => {
+                console.log(`${lhs} ${operand} ${rhs} = ??`);
+                console.log("通信エラー");
+            })
+    }
+
+    function Register() {
         axios
             .post("http://localhost:5000/calc",
                 {
