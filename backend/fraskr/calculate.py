@@ -35,7 +35,7 @@ def calc():
             ' VALUES (?, ?, ?, ?, ?, ?)',
             (cookie_id, num1, num2, operant, result, dt_now)
         )
-
+        db.commit()
         return jsonify({"result": result})
     except Exception as e:
         return jsonify({"result": "400",
