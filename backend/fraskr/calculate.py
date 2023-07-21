@@ -2,11 +2,14 @@ from flask import (
     Blueprint, request, jsonify, abort
 )
 
+from .db import get_db
+
 calculate_blueprint = Blueprint('calc', __name__)
 
 @calculate_blueprint.route("/calc", methods=["POST"])
 def calc():
     json = request.get_json()
+    cookie_id = json["cookie_id"]
     num1 = json["num1"]
     num2 = json["num2"]
     operant = json["ope"]
@@ -22,6 +25,14 @@ def calc():
             result = num1 * num2
         elif operant == "/":
             result = num1 / num2
+        
+        db = get_db()
+        db.execute(
+            'INSERT INTO history(cookie_id, num1, num2, operant, result)'
+            ' VALUES (?, ?, ?, ?, ?)',
+            (cookie_id, num1, num2, operant, result)
+        )
+
         return jsonify({"result": result})
     except ZeroDivisionError:
         return jsonify({"result": "ZeroDivisionError"})
