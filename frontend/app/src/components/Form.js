@@ -15,6 +15,7 @@ function Form() {
         axios
             .post("http://localhost:5000/calc",
                 {
+                    "cookie_id": "h0Ge",
                     "num1": parseFloat(lhs),
                     "num2": parseFloat(rhs),
                     "ope": operand,
