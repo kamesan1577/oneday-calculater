@@ -8,6 +8,7 @@ import axios from "axios";
 
 
 function Form() {
+    const api_base = process.env.REACT_APP_API_PATH;
     const [value, setValue] = useState(0);
     const [lhs, setLhs] = useState(0);
     const [rhs, setRhs] = useState(0);
@@ -23,7 +24,7 @@ function Form() {
 
     function Culc() {
         axios
-            .post("http://localhost:5000/calc",
+            .post(`${api_base}/calc`,
                 {
                     "cookie_id": cookies.cookie_id,
                     "num1": parseFloat(lhs),
@@ -44,7 +45,7 @@ function Form() {
 
     function History() {
         axios
-            .post("http://localhost:5000/history",
+            .post(`${api_base}/history`,
                 {
                     "cookie_id": cookies.cookie_id,
                 }, { timeout: 1000 })
