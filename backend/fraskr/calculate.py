@@ -5,13 +5,13 @@ from .db import get_db
 
 calculate_blueprint = Blueprint('calc', __name__)
 
-@calculate_blueprint.route("/calc", methods=["POST"])
+@calculate_blueprint.route('/calc', methods=['POST'])
 def calc():
     json = request.get_json()
-    cookie_id = json.get("cookie_id")
-    num1 = json["num1"]
-    num2 = json["num2"]
-    operant = json["ope"]
+    cookie_id = request.cookies.get('cookie_id')
+    num1 = json['num1']
+    num2 = json['num2']
+    operant = json['ope']
     result = None
     print(num1, num2, operant)
     dt_now = datetime.datetime.now()
