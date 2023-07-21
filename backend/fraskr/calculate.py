@@ -1,7 +1,5 @@
 import datetime
-from flask import (
-    Blueprint, request, jsonify, abort
-)
+from flask import Blueprint, request, jsonify, abort
 
 from .db import get_db
 
@@ -30,12 +28,11 @@ def calc():
         
         db = get_db()
         db.execute(
-            'INSERT INTO history(cookie_id, num1, num2, operant, result, time_stamp)'
-            ' VALUES (?, ?, ?, ?, ?, ?)',
-            (cookie_id, num1, num2, operant, result, dt_now)
+            "INSERT INTO history(cookie_id, num1, num2, operant, result, time_stamp)"
+            " VALUES (?, ?, ?, ?, ?, ?)",
+            (cookie_id, num1, num2, operant, result, dt_now),
         )
         db.commit()
         return jsonify({"result": result})
     except Exception as e:
-        return jsonify({"result": "400",
-                        "error": e})
+        return jsonify({"result": "400", "error": e})
